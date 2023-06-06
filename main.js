@@ -11,7 +11,7 @@ const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.inner
 camera.position.z = 5;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setClearColor(0x888888); // 회색 배경색 설정
+renderer.setClearColor(0xbbbbbb); // 회색 배경색 설정
 document.body.appendChild( renderer.domElement );
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -139,7 +139,7 @@ loader.load(obj_url, function(object) {
 
     var material = new THREE.PointsMaterial({
         vertexColors: true,
-        size:0.018,
+        size:0.019,
         sizeAttenuation: true // Enable point size attenuation
     });
     var pointCloud = new THREE.Points(geometry, material);
