@@ -139,7 +139,7 @@ loader.load(obj_url, function(object) {
 
     var material = new THREE.PointsMaterial({
         vertexColors: true,
-        size:0.019,
+        size:0.02,
         sizeAttenuation: true // Enable point size attenuation
     });
     var pointCloud = new THREE.Points(geometry, material);
