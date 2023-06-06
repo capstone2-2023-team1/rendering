@@ -11,7 +11,7 @@ const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.inner
 camera.position.z = 5;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setClearColor(0xdddddd); // 회색 배경색 설정
+renderer.setClearColor(0xeeeeee); // 회색 배경색 설정
 document.body.appendChild( renderer.domElement );
 
 const controls = new OrbitControls(camera, renderer.domElement);
