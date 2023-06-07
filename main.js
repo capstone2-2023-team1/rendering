@@ -43,20 +43,13 @@ function getParams(){
     return params;
 }
 
-var loadingElement = document.createElement('div');
-loadingElement.id = 'loading';
-loadingElement.innerText = '로딩 중...';
-document.body.appendChild(loadingElement);
-
 var loader = new OBJLoader();
 loader.load(obj_url, function(object) {
-    //loadingElement.style.display = 'none';
 
     var geometry = new BufferGeometry();
     var positions = [];
     var colors = [];
 
-    var subdivisionModifier =
     object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
             var mesh = child;
@@ -87,8 +80,4 @@ loader.load(obj_url, function(object) {
     }
 
     animate();
-}, function(xhr) {
-    // 로딩 진행 상황 업데이트
-    var percentLoaded = Math.round((xhr.loaded / xhr.total) * 100);
-    loadingElement.innerText = '로딩 중... ' + percentLoaded + '%';
 });
