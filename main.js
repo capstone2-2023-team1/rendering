@@ -71,7 +71,7 @@ loader.load(obj_url, function(object) {
         size:0.02,
         sizeAttenuation: true,// Enable point size attenuation
         flatShading: false, // Enable smooth shading
-        colors:0xffffff
+        color:0xffffff
     });
     var pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
