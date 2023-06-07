@@ -8,7 +8,7 @@ import {BufferGeometry} from "three";
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-camera.position.z = 5;
+camera.position.z = 2;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setClearColor(0x333333); // 회색 배경색 설정
