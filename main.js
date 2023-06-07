@@ -42,85 +42,21 @@ function getParams(){
     }
     return params;
 }
-/*
-function init(geometry) {
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    const cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
 
-    function animate() {
-        requestAnimationFrame( animate );
-
-        //cube.rotation.x += 0.01;
-        //cube.rotation.y += 0.01;
-
-        renderer.render( scene, camera );
-    }
-
-    animate();
-}
-const loader = new OBJLoader();
-
-// load a resource
-loader.load(obj_url,(obj) => init(obj.children[0].geometry))
- */
-
-/*
-const loader = new OBJLoader();
-loader.load(obj_url, function(object) {
-    object.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-            // 정점 색상 데이터 가져오기
-            var geometry = child.geometry;
-            var colors = geometry.attributes.color;
-
-            console.log(colors.count);
-            // 정점 색상 값을 지정하기 위해 버퍼 속성 생성
-            var vertexColors = [];
-            for (var i = 0; i < colors.count; i++) {
-
-                var r = colors.getX(i);
-                var g = colors.getY(i);
-                var b = colors.getZ(i);
-
-                var r = parseInt(colors.getX(i)*255);
-                var g = parseInt(colors.getY(i)*255);
-                var b = parseInt(colors.getZ(i)*255);
-
-                //geometry.faces[i].vertexColors[i] = new THREE.Color(r, g, b);
-                //vertexColors.push(geometry.faces[i].vertexColors[i] );
-                vertexColors.push(new THREE.Color(r, g, b));
-            }
-            console.log(geometry.faces);
-            console.log(vertexColors);
-
-            // MeshPhongMaterial을 적용하여 정점 색상 사용
-            geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors), 3));
-            geometry.attributes.color.needsUpdate = true;
-            child.material.vertexColors = true;
-            //child.material = new THREE.PointsMaterial({ vertexColors: true});
-            console.log("세팅완료");
-        }
-    });
-
-    // 모델 로드 완료 시 처리할 로직
-    scene.add(object);
-    function animate() {
-        requestAnimationFrame( animate );
-        renderer.render( scene, camera );
-    }
-
-    animate();
-});
-*/
-
+var loadingElement = document.createElement('div');
+loadingElement.id = 'loading';
+loadingElement.innerText = '로딩 중...';
+document.body.appendChild(loadingElement);
 
 var loader = new OBJLoader();
 loader.load(obj_url, function(object) {
+    loadingElement.style.display = 'none';
+
     var geometry = new BufferGeometry();
     var positions = [];
     var colors = [];
 
+    var subdivisionModifier =
     object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
             var mesh = child;
@@ -140,7 +76,8 @@ loader.load(obj_url, function(object) {
     var material = new THREE.PointsMaterial({
         vertexColors: true,
         size:0.02,
-        sizeAttenuation: true // Enable point size attenuation
+        sizeAttenuation: true,// Enable point size attenuation
+        flatShading: false // Enable smooth shading
     });
     var pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
@@ -150,4 +87,8 @@ loader.load(obj_url, function(object) {
     }
 
     animate();
+}, function(xhr) {
+    // 로딩 진행 상황 업데이트
+    var percentLoaded = Math.round((xhr.loaded / xhr.total) * 100);
+    loadingElement.innerText = '로딩 중... ' + percentLoaded + '%';
 });
