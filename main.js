@@ -50,7 +50,7 @@ document.body.appendChild(loadingElement);
 
 var loader = new OBJLoader();
 loader.load(obj_url, function(object) {
-    loadingElement.style.display = 'none';
+    //loadingElement.style.display = 'none';
 
     var geometry = new BufferGeometry();
     var positions = [];
